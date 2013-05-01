@@ -1,8 +1,16 @@
 ---
 - hosts: ci
   tasks:
+    - name: add-apt-repository
+      action: apt pkg=python-software-properties
+    - name: Jenkins repo key
+      action: apt_key url='http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key'
+    - name: Jenkins repo
+      action: shell echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list
+      # action: apt_repository repo='deb http://pkg.jenkins-ci.org/debian binary/'
     - name: Apt update
       action: apt update_cache=yes
     - name: Java install
-      action: apt pkg=default-jre state=installed
-
+      action: apt pkg=default-jre
+    - name: Jenkins install
+      action: apt pkg=jenkins

@@ -1,0 +1,8 @@
+---
+- hosts: ci
+  tasks:
+    - name: Apt update
+      action: apt update_cache=yes
+    - name: Java install
+      action: apt pkg=default-jre state=installed
+

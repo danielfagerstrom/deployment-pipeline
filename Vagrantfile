@@ -19,13 +19,16 @@ Vagrant.configure("2") do |config|
   # using a specific IP.
   config.vm.network :private_network, ip: "192.168.20.10"
 
+  # Shellscript provisioning, setup box from windows
+  config.vm.provision :shell, :path => "bootstrap.sh"
+
   # Ansible provisioning
-  config.vm.provision :ansible do |ansible|
-    ansible.sudo = true
-    ansible.verbose = true
-    ansible.playbook = "provisioning/playbook.yml"
-    ansible.inventory_file = "provisioning/ansible_hosts"
-  end
+  # config.vm.provision :ansible do |ansible|
+  #   ansible.sudo = true
+  #   ansible.verbose = true
+  #   ansible.playbook = "provisioning/playbook.yml"
+  #   ansible.inventory_file = "provisioning/ansible_hosts"
+  # end
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
@@ -39,7 +42,7 @@ Vagrant.configure("2") do |config|
   #
   config.vm.provider :virtualbox do |vb|
     # Use VBoxManage to customize the VM. For example to change memory:
-    # vb.customize ["modifyvm", :id, "--memory", "1024"]
+    vb.customize ["modifyvm", :id, "--memory", "1024"]
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
   #

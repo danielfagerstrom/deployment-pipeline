@@ -1,5 +1,6 @@
 ---
-- hosts: ci
+- hosts: local
+  connection: local
   tasks:
     - name: add-apt-repository
       action: apt pkg=python-software-properties

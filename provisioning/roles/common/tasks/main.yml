@@ -1,0 +1,8 @@
+---
+# Common tasks
+- name: add-apt-repository
+  apt: pkg=python-software-properties state=installed
+
+- name: install java
+  apt: pkg=default-jre state=installed
+

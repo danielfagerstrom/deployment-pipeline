@@ -1,8 +1,5 @@
 ---
 - hosts: ci
-  # roles:
-  #   - common
-  #   - ci
   tasks:
     - include: roles/common/tasks/main.yml
     - include: roles/ci/tasks/main.yml

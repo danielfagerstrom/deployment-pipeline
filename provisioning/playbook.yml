@@ -2,6 +2,7 @@
 - hosts: ci
   tasks:
     - include: roles/common/tasks/main.yml
+    - include: roles/git/tasks/main.yml
     - include: roles/maven/tasks/main.yml
     - include: roles/ci/tasks/main.yml
   handlers:

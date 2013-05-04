@@ -1,4 +1,4 @@
-f---
+---
 # Common tasks
 - name: add-apt-repository
   apt: pkg=python-software-properties state=installed

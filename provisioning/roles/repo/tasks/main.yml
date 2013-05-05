@@ -1,0 +1,13 @@
+---
+# Install Artifactory
+- name: download artifactory distro
+  get_url: url=http://sourceforge.net/projects/artifactory/files/artifactory/3.0.0/artifactory-3.0.0.zip/download dest=/opt/artifactory-3.0.0.zip
+  register: fetched_artifactory
+- name: unpack artifactory
+  command: unzip -qo /opt/artifactory-3.0.0.zip -d /opt
+  only_if: ${fetched_artifactory.changed}
+- name: install artifactory
+  command: /opt/artifactory-3.0.0/bin/installService.sh
+  only_if: ${fetched_artifactory.changed}
+- name: start artifactory
+  service: name=artifactory state=started

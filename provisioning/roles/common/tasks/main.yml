@@ -3,9 +3,10 @@
 - name: add-apt-repository
   apt: pkg=python-software-properties state=installed
 
-- name: install java
-  apt: pkg=openjdk-7-jdk state=installed
-
-- name: install unzip
-  apt: pkg=unzip state=installed
+- name: install packages
+  apt: pkg=$item state=installed
+  with_items:
+    - openjdk-7-jdk
+    - unzip
+    - curl
 

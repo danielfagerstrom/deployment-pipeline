@@ -1,5 +1,6 @@
 ---
 - hosts: ci
+  sudo: yes
   tasks:
     - include: roles/common/tasks/main.yml
     - include: roles/git/tasks/main.yml

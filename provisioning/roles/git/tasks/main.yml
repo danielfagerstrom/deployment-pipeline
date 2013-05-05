@@ -1,3 +1,35 @@
 ---
 - name: install git
   apt: pkg=git state=present
+  tags:
+    - git
+- name: create git user
+  user: name=git shell=/usr/bin/git-shell state=present
+  tags:
+    - git
+- name: create .ssh directory
+  file: path=/home/git/.ssh owner=git group=git state=directory
+  tags:
+    - git
+
+# setup spring-petclinic repository
+- name: create spring-petclinic repo directory
+  file: path=/home/git/spring-petclinic.git owner=git group=git state=directory
+  register: created_spring_petclinic
+  tags:
+    - git
+- name: clone spring-petclinic
+  command: git clone --bare https://github.com/danielfagerstrom/spring-petclinic.git /home/git/spring-petclinic.git
+  only_if: ${created_spring_petclinic.changed}
+  tags:
+    - git
+- name: change owner for spring-petclinic
+  command: chown -R git:git /home/git/spring-petclinic.git
+  only_if: ${created_spring_petclinic.changed}
+  tags:
+    - git
+- name: notify jenkins when pushing to spring-petclinic
+  copy: content='curl http://localhost:8080/git/notifyCommit?url=file:///home/git/spring-petclinic.git' 
+        dest='/home/git/spring-petclinic.git/hooks/post-receive' owner=git group=git mode=755
+  tags:
+    - git
